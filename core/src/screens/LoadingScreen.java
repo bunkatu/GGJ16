@@ -48,7 +48,7 @@ public class LoadingScreen implements Screen {
 
     public void loadTextures(){
 
-        game.textures.load();
+        game.textures.loadBG();
 
         splash = false;
         everythingLoaded = true;
@@ -69,7 +69,7 @@ public class LoadingScreen implements Screen {
         camera.setToOrtho(false, 1280, 720);
         batch.setProjectionMatrix(camera.combined);
 
-        bg = new Texture(Gdx.files.internal("screens/loadingScreen.jpg"));
+        bg = new Texture(Gdx.files.internal("screens/loadingScreenBG.jpg"));
 
         bgLoaded = true;
 
