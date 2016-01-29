@@ -13,8 +13,9 @@ public class GGJ16 extends Game {
 	@Override
 	public void create() {
 		textures = new Textures();
-		network = new Network(this);
+		network = new Network();
 		network.connect();
+		network.game = this;
 		this.setScreen(new LoadingScreen(this));
 	}
 

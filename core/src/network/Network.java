@@ -11,12 +11,8 @@ public class Network extends Listener {
 
     public Client client;
     public GGJ16 game;
-    String ip = "localhost";
+    String ip = "146.185.171.56";
     int port = 27960;
-
-    public Network(GGJ16 game){
-        this.game = game;
-    }
 
     public void connect(){
         client = new Client();
