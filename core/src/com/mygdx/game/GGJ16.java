@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import network.Network;
 import screens.LoadingScreen;
 import assets.Textures;
 import com.badlogic.gdx.Game;
@@ -7,10 +8,13 @@ import com.badlogic.gdx.Game;
 public class GGJ16 extends Game {
 
 	public Textures textures;
+	public Network network;
 
 	@Override
 	public void create() {
 		textures = new Textures();
+		network = new Network(this);
+		network.connect();
 		this.setScreen(new LoadingScreen(this));
 	}
 
