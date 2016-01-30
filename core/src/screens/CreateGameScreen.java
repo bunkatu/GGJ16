@@ -22,7 +22,8 @@ import com.mygdx.game.GGJ16;
 
 import java.util.ArrayList;
 
-import network.CreateNewGame;
+import network.game.CreateGame;
+
 
 public class CreateGameScreen implements Screen {
     ArrayList<String> connectedplayers = new ArrayList<String>();
@@ -53,7 +54,7 @@ public class CreateGameScreen implements Screen {
     @Override
     public void show() {
 
-        CreateNewGame packet = new CreateNewGame();
+        CreateGame packet = new CreateGame();
         game.network.client.sendTCP(packet);
 
         tableBottom = new Table();

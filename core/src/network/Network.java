@@ -8,6 +8,8 @@ import com.mygdx.game.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import network.game.CreateGame;
 import network.game.LeaveGame;
@@ -46,6 +48,8 @@ public class Network extends Listener {
 
         // todo: register classes here
         client.getKryo().register(ArrayList.class);
+        client.getKryo().register(Queue.class);
+        client.getKryo().register(LinkedList.class);
 
         client.getKryo().register(Register.class);
         client.getKryo().register(RegisterSuccess.class);
@@ -269,6 +273,7 @@ public class Network extends Listener {
                 return game.lobbies.get(i);
             }
         }
+        return null;
 
     }
 

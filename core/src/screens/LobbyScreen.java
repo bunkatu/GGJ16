@@ -19,10 +19,12 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GGJ16;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.mygdx.game.Lobby;
+
 import java.util.ArrayList;
 
-import network.Game;
-import network.RequestLobbyList;
+import network.lobby.CreateLobby;
+
 
 public class LobbyScreen implements Screen {
 
@@ -65,8 +67,6 @@ public class LobbyScreen implements Screen {
     @Override
     public void show() {
 
-        RequestLobbyList packet = new RequestLobbyList();
-        game.network.client.sendTCP(packet);
 
 //        for (int i=0;i<game.lobbyList.games.size();i++) {
 //            String name=game.lobbyList.games.get(i).name;
@@ -92,6 +92,8 @@ public class LobbyScreen implements Screen {
         buttonCreate=new TextButton("Create Game",skin);
         buttonCreate.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
+                CreateLobby packet=new CreateLobby();
+                game.network.client.sendTCP(packet);
                 game.setScreen(new CreateGameScreen(game));
             }
         });
@@ -166,6 +168,23 @@ public class LobbyScreen implements Screen {
     public void render(float delta) {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        table.clear();
+
+        for(Lobby lobby:game.lobbies){
+
+            String info=lobby.id+"      "+lobby.name+"      "+lobby.players.size()+"/"+lobby.size;
+            createdGames.add(info);
+            TextButton buttoni=new TextButton(info,skin);
+            buttoni.getLabel().setFontScale(3f);
+            buttoni.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent e, float x, float y) {
+                    game.setScreen(new JoinGameScreen(game));
+                }
+            });
+            table.add(buttoni).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
+            table.row();
+        }
 
         camera.update();
         batch.begin();
@@ -174,27 +193,26 @@ public class LobbyScreen implements Screen {
         stage.act(delta);
         stage.draw();
 
-        if(game.lobbyList.games.size() != 0){
-            System.out.println(game.lobbyList.games.size());
-            String name=game.lobbyList.games.get(0).name;
-            int id=game.lobbyList.games.get(0).id;
-            int attend=game.lobbyList.games.get(0).players.size();
-            String info=id+"     "+name+"     "+attend+"/8";
-            createdGames.add(info);
-            TextButton buttoni=new TextButton(info,skin);
-            buttoni.getLabel().setFontScale(3.5f);
-            buttoni.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent e, float x, float y) {
-                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
-
-                }
-            });
-            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
-            table.row();
-            game.lobbyList.games.remove(0);
-
-        }
+//        if(game.lobbies.size() != 0){
+//            String name=game.lobbies.get();
+//            int id=game.lobbyList.games.get(0).id;
+//            int attend=game.lobbyList.games.get(0).players.size();
+//            String info=id+"     "+name+"     "+attend+"/8";
+//            createdGames.add(info);
+//            TextButton buttoni=new TextButton(info,skin);
+//            buttoni.getLabel().setFontScale(3.5f);
+//            buttoni.addListener(new ClickListener(){
+//                @Override
+//                public void clicked(InputEvent e, float x, float y) {
+//                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
+//
+//                }
+//            });
+//            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+//            table.row();
+//            game.lobbyList.games.remove(0);
+//
+//        }
 
     }
 
