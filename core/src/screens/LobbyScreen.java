@@ -21,6 +21,7 @@ import com.mygdx.game.GGJ16;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import java.util.ArrayList;
 
+import network.Game;
 import network.RequestLobbyList;
 
 public class LobbyScreen implements Screen {
@@ -42,22 +43,22 @@ public class LobbyScreen implements Screen {
     public LobbyScreen(GGJ16 game){
 
         this.game = game;
-        String info="No:1    Oyun1    6/8";
-        createdGames.add(info);
-        createdGames.add("No:2 \t\t\t Oyun2 \t 3/5");
-        createdGames.add("No:3 \t\t\t Oyun3 \t 4/8");
-        createdGames.add("No:4 \t\t\t Oyun4 \t 7/8");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
-        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        String info="No:1    Oyun1    6/8";
+//        createdGames.add(info);
+//        createdGames.add("No:2 \t\t\t Oyun2 \t 3/5");
+//        createdGames.add("No:3 \t\t\t Oyun3 \t 4/8");
+//        createdGames.add("No:4 \t\t\t Oyun4 \t 7/8");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
+//        createdGames.add("No:5 \t\t\t Oyun5 \t 6/7");
 
     }
 
@@ -66,6 +67,16 @@ public class LobbyScreen implements Screen {
 
         RequestLobbyList packet = new RequestLobbyList();
         game.network.client.sendTCP(packet);
+
+//        for (int i=0;i<game.lobbyList.games.size();i++) {
+//            String name=game.lobbyList.games.get(i).name;
+//            int id=game.lobbyList.games.get(i).id;
+//            int attend=game.lobbyList.games.get(i).players.size();
+//
+//            createdGames.add(Integer.toString(id)+"     "+name+"     "+attend+"/8");
+//            game.lobbyList.games.remove(i);
+//        }
+
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -155,12 +166,26 @@ public class LobbyScreen implements Screen {
         stage.act(delta);
         stage.draw();
 
-        if(game.lobbyList.games.size() != 0 && renderLobbyList){
+        if(game.lobbyList.games.size() != 0){
             System.out.println(game.lobbyList.games.size());
-            for(int i=0; i<game.lobbyList.games.size(); i++){
-                System.out.println(game.lobbyList.games.get(i).name);
-            }
-            renderLobbyList = false;
+            String name=game.lobbyList.games.get(0).name;
+            int id=game.lobbyList.games.get(0).id;
+            int attend=game.lobbyList.games.get(0).players.size();
+            String info=id+"     "+name+"     "+attend+"/8";
+            createdGames.add(info);
+            TextButton buttoni=new TextButton(info,skin);
+            buttoni.getLabel().setFontScale(3.5f);
+            buttoni.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent e, float x, float y) {
+                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
+
+                }
+            });
+            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+            table.row();
+            game.lobbyList.games.remove(0);
+
         }
 
     }
