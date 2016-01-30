@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import network.lobby.CreateLobby;
+import network.lobby.DeleteLobby;
 import network.lobby.JoinLobby;
 import network.lobby.LeaveLobby;
 import network.lobby.UserCreatedLobby;
+import network.lobby.UserDeletedLobby;
 import network.lobby.UserJoinedLobby;
 import network.lobby.UserLeftLobby;
+import network.lobby.UserReadyLobby;
 import network.login.Login;
 import network.login.LoginFailure;
 import network.login.LoginSuccess;
@@ -50,6 +53,8 @@ public class Network extends Listener {
         client.getKryo().register(UserJoinedLobby.class);
         client.getKryo().register(LeaveLobby.class);
         client.getKryo().register(UserLeftLobby.class);
+        client.getKryo().register(DeleteLobby.class);
+        client.getKryo().register(UserDeletedLobby.class);
 
         client.addListener(this);
 
@@ -99,8 +104,63 @@ public class Network extends Listener {
             System.out.println("A user created a new lobby.");
         }
 
+        if(o instanceof UserJoinedLobby){
+            UserJoinedLobby packet = (UserJoinedLobby) o;
+            Lobby l = get_lobby(packet.lobby_id);
+            l.players.add(packet.username);
+            System.out.println("A user joined a lobby.");
+        }
+
+        if(o instanceof UserLeftLobby){
+            UserLeftLobby packet = (UserLeftLobby) o;
+            Lobby l = get_lobby(packet.lobby_id);
+
+            for(int i=0; i<l.players.size(); i++){
+                if(l.players.get(i).equals(packet.username)){
+                    l.players.remove(i);
+                }
+            }
+            System.out.println("A user left a lobby.");
+        }
+
+        if(o instanceof UserDeletedLobby){
+            UserDeletedLobby packet = (UserDeletedLobby) o;
+
+            for(int i=0; i<game.lobbies.size(); i++){
+                if(game.lobbies.get(i).id == packet.lobby_id){
+                    game.lobbies.remove(i);
+                }
+            }
+
+            System.out.println("A user deleted a lobby.");
+        }
+
+        if(o instanceof UserReadyLobby){
+            UserReadyLobby packet = (UserReadyLobby) o;
+
+            for(int i=0; i<game.lobbies.size(); i++){
+                if(game.lobbies.get(i).id == packet.lobby_id){
+                    for(int j=0; j<game.lobbies.get(i).players.size(); j++){
+                        if(game.lobbies.get(i).players.get(j).equals(packet.username)){
+                            game.lobbies.get(i).ready.add(packet.username);
+                        }
+                    }
+                }
+            }
+
+            System.out.println("A user clicked ready in a lobby.");
+        }
 
     }
 
+    public Lobby get_lobby(int id){
+
+        for(int i=0; i<game.lobbies.size(); i++){
+            if(game.lobbies.get(i).id == id){
+                return game.lobbies.get(i);
+            }
+        }
+
+    }
 
 }

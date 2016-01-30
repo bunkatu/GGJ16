@@ -8,5 +8,6 @@ public class Lobby {
     public String name;
     public int size;
     public ArrayList<String> players;
+    public ArrayList<String> ready;
 
 }

@@ -13,6 +13,7 @@ public class GGJ16 extends Game {
 	public Network network;
 	public Player player;
 	public ArrayList<Lobby> lobbies;
+	public GameState gameState;
 
 	@Override
 	public void create() {
@@ -25,6 +26,7 @@ public class GGJ16 extends Game {
 
 		player = new Player();
 		lobbies = new ArrayList<Lobby>();
+		gameState = new GameState();
 
 		this.setScreen(new LoadingScreen(this));
 	}
