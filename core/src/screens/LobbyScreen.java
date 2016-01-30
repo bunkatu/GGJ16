@@ -21,6 +21,8 @@ import com.mygdx.game.GGJ16;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import java.util.ArrayList;
 
+import network.RequestLobbyList;
+
 public class LobbyScreen implements Screen {
 
     ArrayList<String> createdGames=new ArrayList<String>();
@@ -34,6 +36,7 @@ public class LobbyScreen implements Screen {
     private ScrollPane scrollPane;
 
     private Texture bg;
+    private boolean renderLobbyList = true;
 
 
     public LobbyScreen(GGJ16 game){
@@ -60,6 +63,10 @@ public class LobbyScreen implements Screen {
 
     @Override
     public void show() {
+
+        RequestLobbyList packet = new RequestLobbyList();
+        game.network.client.sendTCP(packet);
+
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
@@ -103,8 +110,6 @@ public class LobbyScreen implements Screen {
         rightContainer.row();
         rightContainer.add(tableBottom);
 
-
-
         stage=new Stage(new ScreenViewport());
         table=new Table();
         table.align(Align.left|Align.top);
@@ -145,10 +150,18 @@ public class LobbyScreen implements Screen {
 
         camera.update();
         batch.begin();
-        batch.draw(bg, 0,0);
+        batch.draw(bg, 0, 0);
         batch.end();
         stage.act(delta);
         stage.draw();
+
+        if(game.lobbyList.games.size() != 0 && renderLobbyList){
+            System.out.println(game.lobbyList.games.size());
+            for(int i=0; i<game.lobbyList.games.size(); i++){
+                System.out.println(game.lobbyList.games.get(i).name);
+            }
+            renderLobbyList = false;
+        }
 
     }
 

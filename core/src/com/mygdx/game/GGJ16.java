@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import network.LobbyList;
 import network.Network;
 import screens.LoadingScreen;
 import assets.Textures;
@@ -10,6 +11,7 @@ public class GGJ16 extends Game {
 	public Textures textures;
 	public Network network;
 	public Player player;
+	public LobbyList lobbyList;
 
 	@Override
 	public void create() {
@@ -18,6 +20,7 @@ public class GGJ16 extends Game {
 		network.connect();
 		network.game = this;
 		player = new Player();
+		lobbyList = new LobbyList();
 		this.setScreen(new LoadingScreen(this));
 	}
 

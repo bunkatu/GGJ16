@@ -28,6 +28,11 @@ public class Network extends Listener {
         client.getKryo().register(LoginFailure.class);
 
         client.getKryo().register(RequestLobbyList.class);
+        client.getKryo().register(CreateNewGame.class);
+        client.getKryo().register(LobbyList.class);
+        client.getKryo().register(Game.class);
+        client.getKryo().register(Player.class);
+        client.getKryo().register(java.util.ArrayList.class);
 
         client.addListener(this);
 
@@ -68,6 +73,12 @@ public class Network extends Listener {
             game.player.is_registered = false;
             game.player.answer_received = true;
             System.out.println("Registration Failed.");
+        }
+
+        if(o instanceof LobbyList){
+            LobbyList packet = (LobbyList) o;
+            game.lobbyList = packet;
+            System.out.println("Lobby List Received.");
         }
 
     }

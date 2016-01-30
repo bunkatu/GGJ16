@@ -22,6 +22,8 @@ import com.mygdx.game.GGJ16;
 
 import java.util.ArrayList;
 
+import network.CreateNewGame;
+
 public class CreateGameScreen implements Screen {
     ArrayList<String> connectedplayers = new ArrayList<String>();
     GGJ16 game;
@@ -34,6 +36,7 @@ public class CreateGameScreen implements Screen {
     private ScrollPane scrollPane;
 
     public CreateGameScreen(GGJ16 game){
+
         this.game = game;
         connectedplayers.add("osman");
         connectedplayers.add("ahmet");
@@ -49,6 +52,10 @@ public class CreateGameScreen implements Screen {
 
     @Override
     public void show() {
+
+        CreateNewGame packet = new CreateNewGame();
+        game.network.client.sendTCP(packet);
+
         tableBottom = new Table();
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -74,7 +81,7 @@ public class CreateGameScreen implements Screen {
                                 protected void result (Object object) {
                                      System.out.println("Chosen: " + object);
                                           if(object.toString() == "true")
-                                               System.exit(0);
+                                               game.setScreen(new LobbyScreen(game));
                                            }
                       }.text("Are you sure you want to quit?").button("Yes", true).button("No",false).key(Input.Keys.ENTER,true)
                           .key(Input.Keys.ESCAPE,false).show(stage);
