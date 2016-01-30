@@ -90,34 +90,42 @@ public class LobbyScreen implements Screen {
         tableBottom=new Table();
         TextButton buttonCreate,buttonQuit;
         buttonCreate=new TextButton("Create Game",skin);
-        buttonCreate.addListener(new ClickListener()
-        {
-            public void clicked(InputEvent e, float x, float y)
-            {
+        buttonCreate.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new CreateGameScreen(game));
             }
         });
         buttonQuit=new TextButton("Quit",skin);
-        buttonQuit.addListener(new ClickListener(){
-        @Override
-        public void clicked(InputEvent e, float x, float y)
-        {boolean as=false;
-             new Dialog  ("Some Dialog", skin, "dialog") {
-                protected void result (Object object) {
-                    System.out.println("Chosen: " + object);
-                    if(object.toString() == "true")
-                        System.exit(0);
-                }
-            }.text("Are you sure you want to quit?").button("Yes", true).button("No",false).key(Input.Keys.ENTER,true)
-                    .key(Input.Keys.ESCAPE,false).show(stage);
+        buttonQuit.addListener(new ClickListener() {
+                                   @Override
+                                   public void clicked(InputEvent e, float x, float y) {
+                                       boolean as = false;
+                                       new Dialog("Some Dialog", skin, "dialog") {
+                                           protected void result(Object object) {
+                                               System.out.println("Chosen: " + object);
+                                               if (object.toString() == "true")
+                                                   System.exit(0);
+                                           }
+                                       }.text("Are you sure you want to quit?").button("Yes", true).button("No", false).key(Input.Keys.ENTER, true)
+                                               .key(Input.Keys.ESCAPE, false).show(stage);
 
-        }
+                                   }
                                }
         );
         tableBottom.add(buttonCreate).size(Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()*0.3f);
         tableBottom.add(buttonQuit).size(Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()*0.3f);
         rightContainer=new Table();
-        rightContainer.add(new Image(userImage)).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() * (0.7f));
+        Image image=new Image(userImage);
+        rightContainer.add(image).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() * (0.6f));
+        rightContainer.row();
+        TextButton customizeButton=new TextButton("Customize Your Character!",skin);
+        customizeButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent e, float x, float y){
+                game.setScreen(new CustomizeScreen(game));
+            }
+        });
+        rightContainer.add(customizeButton).size(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()*0.1f);
         rightContainer.row();
         rightContainer.add(tableBottom);
 
