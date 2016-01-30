@@ -7,6 +7,7 @@ public class Player {
     public String password;
     public int currentGame;
     public boolean logged_in;
+    public boolean is_registered;
 
     public Player(){
 
@@ -15,6 +16,7 @@ public class Player {
         password = "";
         currentGame = 0;
         logged_in = false;
+        is_registered = false;
 
     }
 

@@ -27,6 +27,8 @@ public class Network extends Listener {
         client.getKryo().register(LoginSuccess.class);
         client.getKryo().register(LoginFailure.class);
 
+        client.getKryo().register(RequestLobbyList.class);
+
         client.start();
         try {
             client.connect(5000, ip, port, port);
@@ -53,11 +55,12 @@ public class Network extends Listener {
         }
 
         if(o instanceof RegisterSuccess){
-
+            game.player.is_registered = true;
             System.out.println("Successfully Registered.");
         }
 
         if(o instanceof RegisterFailure){
+            game.player.is_registered = false;
             System.out.println("Registration Failed.");
         }
 
