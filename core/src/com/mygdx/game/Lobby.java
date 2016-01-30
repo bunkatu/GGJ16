@@ -10,4 +10,5 @@ public class Lobby {
     public ArrayList<String> players;
     public ArrayList<String> ready;
 
+
 }

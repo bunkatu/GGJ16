@@ -3,12 +3,18 @@ package network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.mygdx.game.GGJ16;
-import com.mygdx.game.Lobby;
+import com.mygdx.game.*;
+import com.mygdx.game.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import network.game.CreateGame;
+import network.game.LeaveGame;
+import network.game.SendMessage;
+import network.game.UserCreatedGame;
+import network.game.UserLeftGame;
+import network.game.UserSentMessage;
 import network.lobby.CreateLobby;
 import network.lobby.DeleteLobby;
 import network.lobby.JoinLobby;
@@ -21,6 +27,8 @@ import network.lobby.UserReadyLobby;
 import network.login.Login;
 import network.login.LoginFailure;
 import network.login.LoginSuccess;
+import network.player.ChangeAppearance;
+import network.player.UserChangedAppearance;
 import network.register.Register;
 import network.register.RegisterFailure;
 import network.register.RegisterSuccess;
@@ -56,6 +64,17 @@ public class Network extends Listener {
         client.getKryo().register(DeleteLobby.class);
         client.getKryo().register(UserDeletedLobby.class);
 
+        client.getKryo().register(CreateGame.class);
+        client.getKryo().register(UserCreatedGame.class);
+        client.getKryo().register(LeaveGame.class);
+        client.getKryo().register(UserLeftGame.class);
+
+        client.getKryo().register(SendMessage.class);
+        client.getKryo().register(UserSentMessage.class);
+
+        client.getKryo().register(ChangeAppearance.class);
+        client.getKryo().register(UserChangedAppearance.class);
+
         client.addListener(this);
 
         client.start();
@@ -74,6 +93,8 @@ public class Network extends Listener {
     public void received(Connection c, Object o){
 
         if(o instanceof LoginSuccess){
+            LoginSuccess l = (LoginSuccess) o;
+            game.player.username = l.username;
             game.player.online = true;
             System.out.println("User successfully logged in.");
         }
@@ -149,6 +170,94 @@ public class Network extends Listener {
             }
 
             System.out.println("A user clicked ready in a lobby.");
+        }
+
+        if(o instanceof UserCreatedGame){
+            UserCreatedGame packet = (UserCreatedGame) o;
+
+            boolean gameCreated = false;
+            for(int i=0; i<packet.players.size(); i++){
+                if(packet.players.get(i).equals(game.player.username)){
+                    gameCreated = true;
+                }
+            }
+
+            if(gameCreated){
+                game.gameState.active = true;
+                for(int i=0; i<packet.players.size(); i++){
+                    game.gameState.players.add(packet.players.get(i));
+                }
+            }
+
+            System.out.println("A user created a game.");
+        }
+
+        if(o instanceof UserLeftGame){
+            UserLeftGame packet = (UserLeftGame) o;
+
+            if(game.gameState.id == packet.game_id){
+                for(int i=0; i<game.gameState.players.size(); i++){
+                    if(game.gameState.players.get(i).equals(packet.username)){
+                        game.gameState.players.remove(i);
+
+                        if(packet.username.equals(game.player.username)){
+                            game.gameState.active = false;
+                        }
+
+                    }
+                }
+            }
+
+            System.out.println("A user left a game.");
+        }
+
+        if(o instanceof UserSentMessage){
+            UserSentMessage packet = (UserSentMessage) o;
+
+            if(game.gameState.id == packet.game_id){
+                game.gameState.messages.add(packet.message);
+            }
+
+            System.out.println("A user sent a message.");
+        }
+
+        if(o instanceof UserChangedAppearance){
+            UserChangedAppearance packet = (UserChangedAppearance) o;
+
+            if(game.player.username.equals(packet.username)){
+                game.player.type = packet.type;
+                game.player.hair = packet.hair;
+                game.player.eyes = packet.eyes;
+                game.player.lips = packet.lips;
+                game.player.skin = packet.skin;
+                game.player.dress = packet.dress;
+                game.player.eyebrows = packet.eyebrows;
+                game.player.shirt = packet.shirt;
+                game.player.glasses = packet.glasses;
+                game.player.moustache = packet.moustache;
+                game.player.shoes = packet.shoes;
+            }
+
+            for(int i=0; i<game.gameState.players.size(); i++){
+                if(game.gameState.players.get(i).equals(packet.username)){
+                    com.mygdx.game.Player p = new Player();
+                    p.username = packet.username;
+                    p.type = packet.type;
+                    p.hair = packet.hair;
+                    p.eyes = packet.eyes;
+                    p.lips = packet.lips;
+                    p.skin = packet.skin;
+                    p.dress = packet.dress;
+                    p.eyebrows = packet.eyebrows;
+                    p.shirt = packet.shirt;
+                    p.glasses = packet.glasses;
+                    p.moustache = packet.moustache;
+                    p.shoes = packet.shoes;
+                    game.gameState.playerTypes.add(p);
+                }
+            }
+
+            System.out.println("Player appearance change applied.");
         }
 
     }
