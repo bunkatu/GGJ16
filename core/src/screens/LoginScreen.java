@@ -45,9 +45,10 @@ public class LoginScreen implements Screen {
 //        buttonLogin.setSize(300, 60);
         buttonLogin.addListener(new ClickListener() {
             @Override
-            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+            public void clicked(InputEvent e, float x, float y) {
                 buttonLogin.setText("Senin ben anua goyin");
                 doSmtng();
+
             }
         });
         textEmail=new TextField("",skin);
@@ -132,5 +133,6 @@ public class LoginScreen implements Screen {
         String email = textEmail.getText();
 
         System.out.println(password + " " + email);
+        game.setScreen(new LobbyScreen(game));
     }
 }

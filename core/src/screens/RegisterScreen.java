@@ -54,10 +54,9 @@ public class RegisterScreen implements Screen {
 //        buttonRegister.setSize(300, 60);
         buttonRegister.addListener(new ClickListener() {
             @Override
-            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+            public void clicked(InputEvent e, float x, float y) {
                 buttonRegister.setText("Senin ben anua goyin");
                 doSmtng();
-
             }
         });
 //
