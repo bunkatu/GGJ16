@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GGJ16;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class LobbyScreen implements Screen {
 
@@ -79,7 +76,7 @@ public class LobbyScreen implements Screen {
         {
             public void clicked(InputEvent e, float x, float y)
             {
-                game.setScreen(new CreateGameScreen(game));;
+                game.setScreen(new CreateGameScreen(game));
             }
         });
         buttonQuit=new TextButton("Quit",skin);
@@ -119,6 +116,8 @@ public class LobbyScreen implements Screen {
                 @Override
                 public void clicked(InputEvent e, float x, float y) {
                     System.out.println("Basıldı: "+gamecreated.toString());
+                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
+
                 }
             });
             table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
