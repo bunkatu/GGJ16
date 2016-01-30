@@ -9,6 +9,7 @@ public class GGJ16 extends Game {
 
 	public Textures textures;
 	public Network network;
+	public Player player;
 
 	@Override
 	public void create() {
@@ -16,6 +17,7 @@ public class GGJ16 extends Game {
 		network = new Network();
 		network.connect();
 		network.game = this;
+		player = new Player();
 		this.setScreen(new LoadingScreen(this));
 	}
 
