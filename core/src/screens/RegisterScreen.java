@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GGJ16;
 
 /**
@@ -50,8 +49,6 @@ public class RegisterScreen implements Screen {
 
         skin=new Skin(Gdx.files.internal("uiskin.json"));
         buttonRegister=new TextButton("Register",skin);
-//        buttonRegister.setPosition(camera.position.x-150, camera.position.y-140);
-//        buttonRegister.setSize(300, 60);
         buttonRegister.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
@@ -61,18 +58,12 @@ public class RegisterScreen implements Screen {
         });
 //
         textUserName=new TextField("",skin);
-//        textUserName.setPosition(camera.position.x - 150, camera.position.y + 130);
-//        textUserName.setSize(300, 60);
         textUserName.setMessageText("UserName:");
         textPassword=new TextField("",skin);
         textPassword.setPasswordMode(true);
         textPassword.setPasswordCharacter('*');
-//        textPassword.setPosition(camera.position.x-150, camera.position.y+40);
-//        textPassword.setSize(300, 60);
         textPassword.setMessageText("Password:");
         textEmail=new TextField("",skin);
-//        textEmail.setPosition(camera.position.x - 150, camera.position.y - 50);
-//        textEmail.setSize(300, 60);
         textEmail.setMessageText("Email:");
 
 
@@ -93,10 +84,6 @@ public class RegisterScreen implements Screen {
         table.add(buttonRegister).size(Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()/12);
 
         batch=new SpriteBatch();
-//        stage.addActor(buttonRegister);
-//        stage.addActor(textEmail);
-//        stage.addActor(textPassword);
-//        stage.addActor(textUserName);
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
         batch.setProjectionMatrix(camera.combined);

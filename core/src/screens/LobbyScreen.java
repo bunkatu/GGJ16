@@ -79,6 +79,7 @@ public class LobbyScreen implements Screen {
         rightContainer=new Table();
         rightContainer.add(new Image(userImage)).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()*(0.7f));
         rightContainer.row();
+        rightContainer.add(tableBottom);
 
 
 
@@ -102,6 +103,7 @@ public class LobbyScreen implements Screen {
         scrollPane=new ScrollPane(table);
         scrollPane.setWidth(Gdx.graphics.getWidth());
         scrollPane.setHeight(Gdx.graphics.getHeight());
+        scrollPane.setSmoothScrolling(true);
         finalContainer=new Table();
         finalContainer.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         finalContainer.add(scrollPane).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
