@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GGJ16;
 
+import network.Register;
+
 /**
  * Created by alimgiray on 29/01/16.
  */
@@ -36,7 +38,8 @@ public class RegisterScreen implements Screen {
     private Stage stage;
     private Table table;
 
-
+    private boolean buttonClicked = false;
+    private boolean buttonChanged = false;
 
     public RegisterScreen(GGJ16 game){
         this.game=game;
@@ -52,8 +55,8 @@ public class RegisterScreen implements Screen {
         buttonRegister.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                buttonRegister.setText("Senin ben anua goyin");
-                doSmtng();
+                buttonRegister.setText("Waiting Response..");
+                buttonClicked = true;
             }
         });
 //
@@ -93,6 +96,14 @@ public class RegisterScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        if(buttonClicked){
+            if(buttonChanged){
+                doSmtng();
+                buttonClicked=false;
+            } else {
+                buttonChanged = true;
+            }
+        }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
@@ -134,7 +145,26 @@ public class RegisterScreen implements Screen {
         String password = textPassword.getText();
         String email = textEmail.getText();
 
+        Register packet = new Register();
+        packet.mail = email;
+        packet.username = username;
+        packet.password = password;
+        game.network.client.sendTCP(packet);
+
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e){}
+
         System.out.println(username + " " + password + " " + email);
-        game.setScreen(new LoginScreen(game));
+
+
+        if (game.player.is_registered){
+            game.setScreen(new LoginScreen(game));
+        }
+        else {
+            buttonRegister.setText("Failed. Try Again.");
+        }
+
     }
+
 }

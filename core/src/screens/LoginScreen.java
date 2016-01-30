@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GGJ16;
 
+import network.Login;
+
 public class LoginScreen implements Screen {
 
     GGJ16 game;
@@ -31,6 +33,8 @@ public class LoginScreen implements Screen {
     private Skin skin;
     private Stage stage;
     private Table table;
+    private boolean buttonClicked = false;
+    private boolean buttonChanged = false;
 
 
     public LoginScreen(GGJ16 game) {
@@ -46,9 +50,8 @@ public class LoginScreen implements Screen {
         buttonLogin.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                buttonLogin.setText("Senin ben anua goyin");
-                doSmtng();
-
+                buttonLogin.setText("Logging in");
+                buttonClicked = true;
             }
         });
         textEmail=new TextField("",skin);
@@ -92,6 +95,16 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        if(buttonClicked){
+            if(buttonChanged){
+                doSmtng();
+                buttonClicked=false;
+            } else {
+                buttonChanged = true;
+            }
+        }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -100,6 +113,7 @@ public class LoginScreen implements Screen {
         batch.end();
         stage.act(delta);
         stage.draw();
+
 
     }
 
@@ -132,7 +146,24 @@ public class LoginScreen implements Screen {
         String password = textPassword.getText();
         String email = textEmail.getText();
 
+        Login packet = new Login();
+        packet.mail = email;
+        packet.password = password;
+
+        game.network.client.sendTCP(packet);
+
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e){}
+
+
         System.out.println(password + " " + email);
-        game.setScreen(new LobbyScreen(game));
+
+        if(game.player.logged_in){
+            game.setScreen(new LobbyScreen(game));
+        } else {
+            buttonLogin.setText("Failed. Try Again.");
+        }
+
     }
 }

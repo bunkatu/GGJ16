@@ -8,6 +8,7 @@ public class Player {
     public int currentGame;
     public boolean logged_in;
     public boolean is_registered;
+    public boolean answer_received;
 
     public Player(){
 
@@ -17,6 +18,7 @@ public class Player {
         currentGame = 0;
         logged_in = false;
         is_registered = false;
+        answer_received = false;
 
     }
 

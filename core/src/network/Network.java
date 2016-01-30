@@ -29,6 +29,8 @@ public class Network extends Listener {
 
         client.getKryo().register(RequestLobbyList.class);
 
+        client.addListener(this);
+
         client.start();
         try {
             client.connect(5000, ip, port, port);
@@ -46,21 +48,25 @@ public class Network extends Listener {
 
         if(o instanceof LoginSuccess){
             game.player.logged_in = true;
+            game.player.answer_received = true;
             System.out.println("Successfully Logged In.");
         }
 
         if(o instanceof LoginFailure){
             game.player.logged_in = false;
+            game.player.answer_received = true;
             System.out.println("Login Failed.");
         }
 
         if(o instanceof RegisterSuccess){
             game.player.is_registered = true;
-            System.out.println("Successfully Registered.");
+            game.player.answer_received = true;
+            System.out.println("Successfully Registered");
         }
 
         if(o instanceof RegisterFailure){
             game.player.is_registered = false;
+            game.player.answer_received = true;
             System.out.println("Registration Failed.");
         }
 
