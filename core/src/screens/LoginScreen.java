@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,10 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GGJ16;
 
-import network.Login;
+import network.login.Login;
 
 public class LoginScreen implements Screen {
 
@@ -159,7 +157,7 @@ public class LoginScreen implements Screen {
 
         System.out.println(password + " " + email);
 
-        if(game.player.logged_in){
+        if(game.player.online){
             game.setScreen(new LobbyScreen(game));
         } else {
             buttonLogin.setText("Failed. Try Again.");

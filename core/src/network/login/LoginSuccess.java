@@ -1,4 +1,4 @@
-package network;
+package network.login;
 
 public class LoginSuccess {
 

@@ -1,26 +1,31 @@
 package com.mygdx.game;
 
-import network.LobbyList;
 import network.Network;
 import screens.LoadingScreen;
 import assets.Textures;
 import com.badlogic.gdx.Game;
+
+import java.util.ArrayList;
 
 public class GGJ16 extends Game {
 
 	public Textures textures;
 	public Network network;
 	public Player player;
-	public LobbyList lobbyList;
+	public ArrayList<Lobby> lobbies;
 
 	@Override
 	public void create() {
+
 		textures = new Textures();
+
 		network = new Network();
 		network.connect();
 		network.game = this;
+
 		player = new Player();
-		lobbyList = new LobbyList();
+		lobbies = new ArrayList<Lobby>();
+
 		this.setScreen(new LoadingScreen(this));
 	}
 

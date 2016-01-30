@@ -19,11 +19,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GGJ16;
 
-import network.Register;
+import network.register.Register;
 
-/**
- * Created by alimgiray on 29/01/16.
- */
 public class RegisterScreen implements Screen {
 
     GGJ16 game;
@@ -158,7 +155,7 @@ public class RegisterScreen implements Screen {
         System.out.println(username + " " + password + " " + email);
 
 
-        if (game.player.is_registered){
+        if (game.player.registered){
             game.setScreen(new LoginScreen(game));
         }
         else {

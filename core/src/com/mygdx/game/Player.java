@@ -2,23 +2,20 @@ package com.mygdx.game;
 
 public class Player {
 
+    public int id;
     public String username;
     public String mail;
     public String password;
-    public int currentGame;
-    public boolean logged_in;
-    public boolean is_registered;
-    public boolean answer_received;
+    public boolean online;
+    public boolean registered;
 
     public Player(){
 
         username = "";
         mail = "";
         password = "";
-        currentGame = 0;
-        logged_in = false;
-        is_registered = false;
-        answer_received = false;
+        online = false;
+        registered = false;
 
     }
 

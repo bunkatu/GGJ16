@@ -1,4 +1,4 @@
-package network;
+package network.register;
 
 public class RegisterSuccess {
 
