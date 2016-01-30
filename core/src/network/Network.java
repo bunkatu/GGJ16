@@ -30,6 +30,7 @@ public class Network extends Listener {
         client.getKryo().register(RequestLobbyList.class);
         client.getKryo().register(CreateNewGame.class);
         client.getKryo().register(LobbyList.class);
+        client.getKryo().register(GameRoomCreated.class);
         client.getKryo().register(Game.class);
         client.getKryo().register(Player.class);
         client.getKryo().register(java.util.ArrayList.class);
@@ -79,6 +80,12 @@ public class Network extends Listener {
             LobbyList packet = (LobbyList) o;
             game.lobbyList = packet;
             System.out.println("Lobby List Received.");
+        }
+
+        if(o instanceof GameRoomCreated){
+            GameRoomCreated packet = (GameRoomCreated) o;
+            game.lobbyList.games.add(packet.g);
+            System.out.println("New Game Room Received.");
         }
 
     }
