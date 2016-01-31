@@ -204,6 +204,9 @@ public class Network extends Listener  {
                 game.gameState.active = true;
                 for(int i=0; i<packet.players.size(); i++){
                     game.gameState.players.add(packet.players.get(i));
+                    Player p = new Player();
+                    p.username = packet.players.get(i);
+                    game.gameState.playerTypes.add(p);
                 }
                 game.gameState.demon = packet.demon;
                 game.gameState.votes = new HashMap<String, Integer>();
