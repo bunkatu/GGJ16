@@ -22,6 +22,7 @@ public class GameState {
         players = new ArrayList<String>();
         roles = new ArrayList<String>();
         messages = new LinkedList<String>();
+        playerTypes = new ArrayList<Player>();
         turn = 0;
     }
 
