@@ -69,14 +69,15 @@ public class GameScreen implements Screen {
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
             if(type==0){
-                font.draw(batch,player.username,i*150,i*150);
+                font.draw(batch,game.gameState.players.get(i),i*150,i*150);
+                batch.draw(game.textures.kiz_tenler.get(player.skin),150*i,150*i);
                 batch.draw(game.textures.kiz_burunlar.get(0),150*i,150*i);
                 batch.draw(game.textures.kiz_dudaklar.get(player.lips),150*i,150*i);
                 batch.draw(game.textures.kiz_elbiseler.get(player.dress),150*i,150*i);
                 batch.draw(game.textures.kiz_gozler.get(player.eyes),150*i,150*i);
                 batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),150*i,150*i);
                 batch.draw(game.textures.kiz_saclar.get(player.hair),150*i,150*i);
-                batch.draw(game.textures.kiz_tenler.get(player.skin),150*i,150*i);
+
             }
 
 
