@@ -30,7 +30,9 @@ import network.lobby.LeaveLobby;
 
 public class CreateGameScreen implements Screen {
     ArrayList<String> connectedplayers = new ArrayList<String>();
+    ArrayList<TextButton> playerButtons = new ArrayList<TextButton>();
     GGJ16 game;
+
     public OrthographicCamera camera;
     public SpriteBatch batch;
     private Stage stage;
@@ -38,20 +40,22 @@ public class CreateGameScreen implements Screen {
     private Texture bg;
     private Skin skin;
     private ScrollPane scrollPane;
+    private Lobby thisLobby;
     private boolean isLobby=false;
 
-    public CreateGameScreen(GGJ16 game){
+    public CreateGameScreen(GGJ16 game,Lobby l){
 
         this.game = game;
-        connectedplayers.add("osman");
-        connectedplayers.add("ahmet");
-        connectedplayers.add("john");
-        connectedplayers.add("kutalmis");
-        connectedplayers.add("zattirizopzop");
-        connectedplayers.add("demonhunter");
-        connectedplayers.add("crazyvillager");
-        connectedplayers.add("harddemon123");
-        connectedplayers.add("zenciportakal");
+        this.thisLobby=l;
+//        connectedplayers.add("osman");
+//        connectedplayers.add("ahmet");
+//        connectedplayers.add("john");
+//        connectedplayers.add("kutalmis");
+//        connectedplayers.add("zattirizopzop");
+//        connectedplayers.add("demonhunter");
+//        connectedplayers.add("crazyvillager");
+//        connectedplayers.add("harddemon123");
+//        connectedplayers.add("zenciportakal");
 
     }
 
@@ -69,14 +73,14 @@ public class CreateGameScreen implements Screen {
         Texture userImage=new Texture(Gdx.files.internal("imageTest.png"));//imagebutton ile profile gidebilir
         TextButton buttonstart,buttonQuit;
         buttonstart=new TextButton("Start Game",skin);
-        buttonstart.addListener(new ClickListener()
-        {
-            public void clicked(InputEvent e, float x, float y)
-            {
+        buttonstart.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
                 CreateGame packet = new CreateGame();
                 game.network.client.sendTCP(packet);
             }
         });
+//        connectedplayers.addAll(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players);
+
         buttonQuit=new TextButton("Quit",skin);
         buttonQuit.addListener(new ClickListener(){
                  @Override
@@ -114,7 +118,13 @@ public class CreateGameScreen implements Screen {
                     System.out.println("Basıldı: "+players.toString());
                 }
             });
-            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+
+            playerButtons.add(buttoni);
+//            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+//            table.row();
+        }
+        for (TextButton bt:playerButtons){
+            table.add(bt).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
             table.row();
         }
         scrollPane=new ScrollPane(table);
@@ -131,6 +141,40 @@ public class CreateGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+//        System.out.println(game.lobbies.size());
+//        System.out.print(game.lobbies.get(0).name);
+//        System.out.print(thisLobby.name);
+
+
+        if(!connectedplayers.equals(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players)){
+            for (int i=0;i<connectedplayers.size();i++){
+                if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(connectedplayers.get(i))){
+                    connectedplayers.remove(i);
+                    table.removeActor(playerButtons.get(i));
+                    playerButtons.remove(i);
+                }
+            }
+            for (int i=0;i<game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.size();i++){
+                if(!connectedplayers.contains(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i))){
+                    final String player=(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i));
+                    connectedplayers.add(player);
+                    TextButton buttoni=new TextButton(player,skin);
+                    buttoni.getLabel().setFontScale(3.5f);
+                    buttoni.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent e, float x, float y) {
+                            System.out.println("Basıldı: " + player);
+                        }
+                    });
+
+                    playerButtons.add(buttoni);
+                    table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+                    table.row();
+
+                }
+            }
+        }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

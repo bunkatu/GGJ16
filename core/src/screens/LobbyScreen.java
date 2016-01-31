@@ -132,7 +132,7 @@ public class LobbyScreen implements Screen {
                 game.setScreen(new CustomizeScreen(game));
             }
         });
-        rightContainer.add(customizeButton).size(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()*0.1f);
+        rightContainer.add(customizeButton).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() * 0.1f);
         rightContainer.row();
         rightContainer.add(tableBottom);
 
@@ -140,6 +140,7 @@ public class LobbyScreen implements Screen {
         table=new Table();
         table.align(Align.left|Align.top);
         bg = game.textures.lobbyScreenBG;
+        createdLobbies.addAll(game.lobbies);
         for(final Lobby gamecreated:createdLobbies){
             TextButton buttoni=new TextButton(gamecreated.name,skin);
             buttoni.getLabel().setFontScale(3.5f);
@@ -150,6 +151,7 @@ public class LobbyScreen implements Screen {
 
                     JoinLobby packet = new JoinLobby();
                     packet.id = gamecreated.id;
+                    game.network.client.sendTCP(packet);
 //                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
 
                 }
@@ -189,7 +191,7 @@ public class LobbyScreen implements Screen {
             for (int i=0;i<createdLobbies.size();i++){
                 if (!game.lobbies.contains(createdLobbies.get(i))){
                     createdLobbies.remove(i);
-                    table.removeActor(lobbyButtons.get(i));
+                    table.removeActor(lobbyButtons.get(i),true);
                     lobbyButtons.remove(i);
                 }
             }
@@ -205,6 +207,8 @@ public class LobbyScreen implements Screen {
                             System.out.println("Basıldı: " + lobby.name);
                             JoinLobby packet = new JoinLobby();
                             packet.id = lobby.id;
+                            game.network.client.sendTCP(packet);
+
 //                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
 
                         }
@@ -217,17 +221,20 @@ public class LobbyScreen implements Screen {
             }
         }
         for(Lobby lobby :game.lobbies){
+//            System.out.print("Test1");
             if (lobby.players.get(0).equals(game.player.username)){
-                game.setScreen(new CreateGameScreen(game));
+//                System.out.print("Test2");
+                game.setScreen(new CreateGameScreen(game,lobby));
             }
             else if(lobby.players.contains(game.player.username)){
+//                System.out.print("Test3");
                 game.setScreen(new JoinGameScreen(game));
             }
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        table.clear();
-        System.out.println("Lobbies size: " +game.lobbies.size());
+//        System.out.println("Lobbies size: " +game.lobbies.size());
 
 //        for(Lobby lobby:game.lobbies){
 //
