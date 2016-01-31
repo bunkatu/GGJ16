@@ -142,38 +142,49 @@ public class CreateGameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-//        System.out.println(game.lobbies.size());
+        System.out.println(game.lobbies.size());
 //        System.out.print(game.lobbies.get(0).name);
 //        System.out.print(thisLobby.name);
 
+        if(!game.lobbies.contains(thisLobby)){
 
-        if(!connectedplayers.equals(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players)){
-            for (int i=0;i<connectedplayers.size();i++){
-                if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(connectedplayers.get(i))){
-                    connectedplayers.remove(i);
-                    table.removeActor(playerButtons.get(i));
-                    playerButtons.remove(i);
+            game.setScreen(new LobbyScreen(game));
+
+            System.out.println("SICTIK ");
+        }
+
+
+        try {
+            if(!connectedplayers.equals(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players)){
+                for (int i=0;i<connectedplayers.size();i++){
+                    if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(connectedplayers.get(i))){
+                        connectedplayers.remove(i);
+                        table.removeActor(playerButtons.get(i));
+                        playerButtons.remove(i);
+                    }
+                }
+                for (int i=0;i<game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.size();i++){
+                    if(!connectedplayers.contains(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i))){
+                        final String player=(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i));
+                        connectedplayers.add(player);
+                        TextButton buttoni=new TextButton(player,skin);
+                        buttoni.getLabel().setFontScale(3.5f);
+                        buttoni.addListener(new ClickListener(){
+                            @Override
+                            public void clicked(InputEvent e, float x, float y) {
+                                System.out.println("Basıldı: " + player);
+                            }
+                        });
+
+                        playerButtons.add(buttoni);
+                        table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+                        table.row();
+
+                    }
                 }
             }
-            for (int i=0;i<game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.size();i++){
-                if(!connectedplayers.contains(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i))){
-                    final String player=(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.get(i));
-                    connectedplayers.add(player);
-                    TextButton buttoni=new TextButton(player,skin);
-                    buttoni.getLabel().setFontScale(3.5f);
-                    buttoni.addListener(new ClickListener(){
-                        @Override
-                        public void clicked(InputEvent e, float x, float y) {
-                            System.out.println("Basıldı: " + player);
-                        }
-                    });
-
-                    playerButtons.add(buttoni);
-                    table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
-                    table.row();
-
-                }
-            }
+        }catch (Exception e){
+            System.out.print("as");
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -182,16 +193,16 @@ public class CreateGameScreen implements Screen {
             game.setScreen(new GameScreen(game));
         }
 
-        for (Lobby l:game.lobbies){
-            if (l.players.contains(game.player.username)){
-                isLobby=true;
-            }
-
-        }
-        if(!isLobby&&!game.gameState.active){
-            game.setScreen(new LobbyScreen(game));
-        }
-        isLobby=false;
+//        for (Lobby l:game.lobbies){
+//            if (l.players.contains(game.player.username)){
+//                isLobby=true;
+//            }
+//
+//        }
+//        if(!isLobby&&!game.gameState.active){
+//            game.setScreen(new LobbyScreen(game));
+//        }
+//        isLobby=false;
 
         camera.update();
         batch.begin();

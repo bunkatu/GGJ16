@@ -228,7 +228,7 @@ public class LobbyScreen implements Screen {
             }
             else if(lobby.players.contains(game.player.username)){
 //                System.out.print("Test3");
-                game.setScreen(new JoinGameScreen(game));
+                game.setScreen(new JoinGameScreen(game,lobby));
             }
         }
 
