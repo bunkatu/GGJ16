@@ -76,6 +76,7 @@ public class GameScreen implements Screen {
                 batch.draw(game.textures.kiz_gozler.get(player.eyes),150*i,150*i);
                 batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),150*i,150*i);
                 batch.draw(game.textures.kiz_saclar.get(player.hair),150*i,150*i);
+                batch.draw(game.textures.kiz_tenler.get(player.skin),150*i,150*i);
             }
 
 
