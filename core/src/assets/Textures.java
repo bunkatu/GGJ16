@@ -109,6 +109,25 @@ public class Textures {
     public Texture amca_ten,amca_ten1,amca_ten2;
     public Texture amca_tisort,amca_tisort1,amca_tisort2,amca_tisort3;
     /*-----------Amca---------------*/
+    /*-----------Teyze-------------*/
+    public ArrayList<Texture> teyze_tisortler;
+    public ArrayList<Texture> teyze_tenler;
+    public ArrayList<Texture> teyze_kolyeler;
+    public ArrayList<Texture> teyze_saclar;
+    public ArrayList<Texture> teyze_dudaklar;
+
+    public Texture teyze_ayakkabi;
+    public Texture teyze_burun;
+    public Texture teyze_dudak,teyze_dudak1,teyze_dudak2;
+    public Texture teyze_etek;
+    public Texture teyze_goz;
+    public Texture teyze_gozluk;
+    public Texture teyze_kolye,teyze_kolye1,teyze_kolye2;
+    public Texture teyze_sac,teyze_sac1,teyze_sac2;
+    public Texture teyze_ten,teyze_ten1,teyze_ten2;
+    public Texture teyze_tisort,teyze_tisort1,teyze_tisort2,teyze_tisort3;
+
+    /*---------------Teyze------------*/
 
     public Textures(){
         kiz_dudaklar=new ArrayList<Texture>();
@@ -235,12 +254,12 @@ public class Textures {
         erkek_kaslar.add(erkek_kas2);
         erkek_kaslar.add(erkek_kas1);
         /*----------------------------------------------*/
-        amca_dudaklar=new ArrayList<Texture>();
-        amca_pantolonlar=new ArrayList<Texture>();
-        amca_gozler=new ArrayList<Texture>();
-        amca_kaslar=new ArrayList<Texture>();
-        amca_tisortler=new ArrayList<Texture>();
-        amca_tenler=new ArrayList<Texture>();
+         amca_dudaklar=new ArrayList<Texture>();
+         amca_pantolonlar=new ArrayList<Texture>();
+         amca_gozler=new ArrayList<Texture>();
+         amca_kaslar=new ArrayList<Texture>();
+         amca_tisortler=new ArrayList<Texture>();
+         amca_tenler=new ArrayList<Texture>();
 
          amca_burun = new Texture(Gdx.files.internal("amca/amca_burun.png"));
          amca_ayakkabi = new Texture(Gdx.files.internal("amca/amca_ayakkabi.png"));
@@ -297,7 +316,63 @@ public class Textures {
             amca_gozler.add(amca_goz);
             amca_gozler.add(amca_goz1);
 
+        /*------------------------------------------------*/
+        teyze_tisortler = new ArrayList<Texture>();
+        teyze_tenler= new ArrayList<Texture>();
+        teyze_kolyeler= new ArrayList<Texture>();
+        teyze_saclar= new ArrayList<Texture>();
+        teyze_dudaklar= new ArrayList<Texture>();
 
+          teyze_ayakkabi = new Texture(Gdx.files.internal("teyze/teyze_ayakkabi.png"));
+
+          teyze_burun = new Texture(Gdx.files.internal("teyze/teyze_burun.png"));
+
+          teyze_dudak = new Texture(Gdx.files.internal("teyze/teyze_dudak.png"));
+          teyze_dudak1 = new Texture(Gdx.files.internal("teyze/teyze_dudak1.png"));
+          teyze_dudak2 = new Texture(Gdx.files.internal("teyze/teyze_dudak2.png"));
+
+          teyze_etek = new Texture(Gdx.files.internal("teyze/teyze_etek.png"));
+
+          teyze_goz = new Texture(Gdx.files.internal("teyze/teyze_goz.png"));
+
+          teyze_gozluk = new Texture(Gdx.files.internal("teyze/teyze_gozluk.png"));
+
+          teyze_kolye = new Texture(Gdx.files.internal("teyze/teyze_kolye.png"));
+          teyze_kolye1 = new Texture(Gdx.files.internal("teyze/teyze_kolye1.png"));
+          teyze_kolye2 = new Texture(Gdx.files.internal("teyze/teyze_kolye2.png"));
+
+          teyze_sac = new Texture(Gdx.files.internal("teyze/teyze_sac.png"));
+          teyze_sac1 = new Texture(Gdx.files.internal("teyze/teyze_sac1.png"));
+          teyze_sac2 = new Texture(Gdx.files.internal("teyze/teyze_sac2.png"));
+
+          teyze_ten = new Texture(Gdx.files.internal("teyze/teyze_ten.png"));
+          teyze_ten1 = new Texture(Gdx.files.internal("teyze/teyze_ten1.png"));
+          teyze_ten2 = new Texture(Gdx.files.internal("teyze/teyze_ten2.png"));
+
+          teyze_tisort = new Texture(Gdx.files.internal("teyze/teyze_tisort.png"));
+          teyze_tisort1 = new Texture(Gdx.files.internal("teyze/teyze_yelek.png"));
+          teyze_tisort2 = new Texture(Gdx.files.internal("teyze/teyze_yelek1.png"));
+          teyze_tisort3 = new Texture(Gdx.files.internal("teyze/teyze_yelek2.png"));
+
+        teyze_tisortler.add(teyze_tisort1);
+        teyze_tisortler.add(teyze_tisort2);
+        teyze_tisortler.add(teyze_tisort3);
+
+        teyze_tenler.add(teyze_ten);
+        teyze_tenler.add(teyze_ten1);
+        teyze_tenler.add(teyze_ten2);
+
+        teyze_kolyeler.add(teyze_kolye);
+        teyze_kolyeler.add(teyze_kolye1);
+        teyze_kolyeler.add(teyze_kolye2);
+
+        teyze_saclar.add(teyze_sac);
+        teyze_saclar.add(teyze_sac1);
+        teyze_saclar.add(teyze_sac2);
+
+        teyze_dudaklar.add(teyze_dudak);
+        teyze_dudaklar.add(teyze_dudak1);
+        teyze_dudaklar.add(teyze_dudak2);
 
 
     }

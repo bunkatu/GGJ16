@@ -42,8 +42,8 @@ public class CustomizeScreen implements Screen {
     private Texture goz;
     private Texture burun;
     private Texture gomlek,ayakkabi;
-    private Texture gozluk,biyik;
-    private TextButton buttonAmca;
+    private Texture gozluk,biyik,kolye;
+    private TextButton buttonAmca,buttonTeyze;
     private Stage stage;
     private Table tableCategories,mainHolder,charContainer;
     private TextButton prev,next;
@@ -53,7 +53,7 @@ public class CustomizeScreen implements Screen {
     Texture skingirl,dress;
     static int selection=0;
     static int currentChar=0;
-    static boolean amcaCheck=true;
+    static boolean amcaCheck=true,teyzeCheck = false;
 
 
     public CustomizeScreen(GGJ16 game){
@@ -81,6 +81,8 @@ public class CustomizeScreen implements Screen {
         skin=new Skin(Gdx.files.internal("uiskin.json"));
 
         buttonAmca=new TextButton("Gomlek",skin);
+
+        buttonTeyze = new TextButton("Kolye",skin);
 
         for (int i=0; i<categories.size(); i++){
             final int sel=i;
@@ -189,7 +191,6 @@ public class CustomizeScreen implements Screen {
         batch.draw(ten,700,100);
         batch.draw(dudak,700,100);
         batch.draw(sac,700,100);
-        batch.draw(elbise,700,100);
         batch.draw(goz,700,100);
         batch.draw(kas,700,100);
         batch.draw(burun,700,100);
@@ -206,8 +207,9 @@ public class CustomizeScreen implements Screen {
                 buttonAmca.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent e, float x, float y) {
-                        amcaNext(6);
-                        System.out.println("Selection: "+6);
+                        if(currentChar == 2)
+                        {  amcaNext(6);
+                        System.out.println("Selection: "+6);}
                     }
                 });
                 tableCategories.add(buttonAmca).fillX();
@@ -223,6 +225,22 @@ public class CustomizeScreen implements Screen {
                 buttonAmca.setVisible(false);
                 amcaCheck=true;
         }
+        if(currentChar==3) {
+
+            batch.draw(game.textures.teyze_tisort,700,100);
+            batch.draw(ayakkabi,700,100);
+            batch.draw(gomlek,700,100);
+
+
+
+        }
+        batch.draw(elbise,700,100);
+        if(currentChar == 3)
+        {
+
+            batch.draw(kolye,700,100);
+        }
+
         batch.end();
         stage.act(delta);
         stage.draw();
@@ -321,6 +339,28 @@ public class CustomizeScreen implements Screen {
     }
 
     public void amcaNext(int selection){
+        if (selection == 0) {
+            sac = game.textures.amca_sac;
+        } else if (selection == 1) {
+            int index = game.textures.amca_gozler.indexOf(goz);
+            goz = game.textures.amca_gozler.get((index + 1) % game.textures.amca_gozler.size());
+        } else if (selection == 2) {
+            int index = game.textures.amca_dudaklar.indexOf(dudak);
+            dudak=game.textures.amca_dudaklar.get((index+1)%game.textures.amca_dudaklar.size());
+        }else if (selection == 3) {
+            int index = game.textures.amca_tenler.indexOf(ten);
+            ten=game.textures.amca_tenler.get((index+1)%game.textures.amca_tenler.size());
+        }else if (selection == 4) {
+            int index = game.textures.amca_pantolonlar.indexOf(elbise);
+            elbise=game.textures.amca_pantolonlar.get((index+1)%game.textures.amca_pantolonlar.size());
+        }else if (selection == 5) {
+            int index = game.textures.amca_kaslar.indexOf(kas);
+            kas=game.textures.amca_kaslar.get((index+1)%game.textures.amca_kaslar.size());
+        }
+        else if (selection == 6) {
+            int index = game.textures.amca_tisortler.indexOf(gomlek);
+            gomlek=game.textures.amca_tisortler.get((index+1)%game.textures.amca_tisortler.size());
+        }
 
     }
     public void amcaIntiial(){
@@ -342,9 +382,36 @@ public class CustomizeScreen implements Screen {
     }
     public void teyzeNext(int selection){
 
+        if (selection == 0) {
+            int index = game.textures.teyze_saclar.indexOf(sac);
+            sac = game.textures.teyze_saclar.get((index + 1) % game.textures.teyze_saclar.size());
+        } else if (selection == 1) {
+            goz = game.textures.teyze_goz;
+        } else if (selection == 2) {
+            int index = game.textures.teyze_dudaklar.indexOf(dudak);
+            dudak=game.textures.teyze_dudaklar.get((index+1)%game.textures.teyze_dudaklar.size());
+        }else if (selection == 3) {
+            int index = game.textures.teyze_tenler.indexOf(ten);
+            ten=game.textures.teyze_tenler.get((index+1)%game.textures.teyze_tenler.size());
+        }else if (selection == 4) {
+            int index = game.textures.teyze_tisortler.indexOf(elbise);
+            elbise=game.textures.teyze_tisortler.get((index+1)%game.textures.teyze_tisortler.size());
+        }else if (selection == 5) {
+            int index = game.textures.teyze_kolyeler.indexOf(kas);
+            kas=game.textures.teyze_kolyeler.get((index+1)%game.textures.teyze_kolyeler.size());
+        }
     }
     public void teyzeInitial(){
-
+        dudak=game.textures.teyze_dudaklar.get(0);
+        ten=game.textures.teyze_tenler.get(0);
+        sac=game.textures.teyze_saclar.get(0);
+        burun=game.textures.teyze_burun;
+        goz=game.textures.teyze_goz;
+        elbise=game.textures.teyze_tisortler.get(0);
+        ayakkabi=game.textures.teyze_ayakkabi;
+        gomlek=game.textures.teyze_etek;
+        gozluk=game.textures.teyze_gozluk;
+        kolye=game.textures.teyze_kolyeler.get(0);
     }
 
 }
