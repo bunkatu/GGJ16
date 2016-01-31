@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.GGJ16;
 import com.mygdx.game.Player;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class GameScreen implements Screen {
@@ -20,6 +21,21 @@ public class GameScreen implements Screen {
     public OrthographicCamera camera;
     public SpriteBatch batch;
     private BitmapFont font;
+    private static float POS1X;
+    private static float POS1Y;
+    private static float POS2X;
+    private static float POS2Y;
+    private static float POS3X;
+    private static float POS3Y;
+    private static float POS4X;
+    private static float POS4Y;
+    private static float POS5X;
+    private static float POS5Y;
+    private static float POS6X;
+    private static float POS6Y;
+    ArrayList<Float> posx;
+    ArrayList<Float> posy;
+
     Skin skin;
 
     private Texture bg;
@@ -34,6 +50,34 @@ public class GameScreen implements Screen {
 
         skin =new Skin(Gdx.files.internal("uiskin.json"));
         font=new BitmapFont();
+        font.setColor(0,0,0,1);
+        POS1X=(Gdx.graphics.getWidth()*2/6);
+        POS1Y=0;
+        POS2X=(Gdx.graphics.getWidth()*2/8);
+        POS2Y=(Gdx.graphics.getHeight()*0.4f);
+        POS3X=(Gdx.graphics.getWidth()*3/10);
+        POS3Y=(Gdx.graphics.getHeight()*0.5f);
+        POS4X=(Gdx.graphics.getWidth()*6/10);
+        POS4Y=(Gdx.graphics.getHeight()*0.5f);
+        POS5X=(Gdx.graphics.getWidth()*5/8);
+        POS5Y=(Gdx.graphics.getHeight()*0.4f);
+        POS6X=(Gdx.graphics.getWidth()*3/6);
+        POS6Y=0;
+        posx=new ArrayList<Float>();
+        posx.add(POS1X);
+        posx.add(POS2X);
+        posx.add(POS3X);
+        posx.add(POS4X);
+        posx.add(POS5X);
+        posx.add(POS6X);
+        posy=new ArrayList<Float>();
+        posx.add(POS1Y);
+        posx.add(POS2Y);
+        posx.add(POS3Y);
+        posx.add(POS4Y);
+        posx.add(POS5Y);
+        posx.add(POS6Y);
+
         System.out.println(game.gameState.id);
         for (String name:game.gameState.players){
             System.out.println(name);
@@ -62,6 +106,7 @@ public class GameScreen implements Screen {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         batch.begin();
         batch.draw(bg, 0, 0);
         System.out.println(game.gameState.playerTypes.size());
@@ -69,14 +114,16 @@ public class GameScreen implements Screen {
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
             if(type==0){
-                font.draw(batch,game.gameState.players.get(i),i*150,i*150);
-                batch.draw(game.textures.kiz_tenler.get(player.skin),150*i,150*i);
-                batch.draw(game.textures.kiz_burunlar.get(0),150*i,150*i);
-                batch.draw(game.textures.kiz_dudaklar.get(player.lips),150*i,150*i);
-                batch.draw(game.textures.kiz_elbiseler.get(player.dress),150*i,150*i);
-                batch.draw(game.textures.kiz_gozler.get(player.eyes),150*i,150*i);
-                batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),150*i,150*i);
-                batch.draw(game.textures.kiz_saclar.get(player.hair),150*i,150*i);
+                font.draw(batch,game.gameState.players.get(i),posx.get(i),posy.get(i));
+                System.out.println("Eleman : " + game.gameState.players.get(i));
+
+                batch.draw(game.textures.kiz_tenler.get(player.skin),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_burunlar.get(0),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_dudaklar.get(player.lips),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_elbiseler.get(player.dress),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_gozler.get(player.eyes),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_saclar.get(player.hair),posx.get(i),posy.get(i));
 
             }
 
