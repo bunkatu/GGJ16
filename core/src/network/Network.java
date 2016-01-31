@@ -8,15 +8,19 @@ import com.mygdx.game.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import network.game.CreateGame;
 import network.game.LeaveGame;
+import network.game.PlayDayTurn;
 import network.game.SendMessage;
 import network.game.UserCreatedGame;
 import network.game.UserLeftGame;
+import network.game.UserPlayedDayTurn;
 import network.game.UserSentMessage;
+import network.game.UserTurnEnded;
 import network.lobby.CreateLobby;
 import network.lobby.DeleteLobby;
 import network.lobby.JoinLobby;
@@ -81,6 +85,10 @@ public class Network extends Listener  {
 
         client.getKryo().register(ChangeAppearance.class);
         client.getKryo().register(UserChangedAppearance.class);
+
+        client.getKryo().register(PlayDayTurn.class);
+        client.getKryo().register(UserPlayedDayTurn.class);
+        client.getKryo().register(UserTurnEnded.class);
 
         client.addListener(this);
 
@@ -194,6 +202,9 @@ public class Network extends Listener  {
                 for(int i=0; i<packet.players.size(); i++){
                     game.gameState.players.add(packet.players.get(i));
                 }
+                game.gameState.demon = packet.demon;
+                game.gameState.votes = new HashMap<String, Integer>();
+                game.gameState.votes = packet.votes;
             }
 
             System.out.println("A user created a game.");
@@ -265,6 +276,32 @@ public class Network extends Listener  {
             }
 
             System.out.println("Player appearance change applied.");
+        }
+
+        if(o instanceof UserPlayedDayTurn){
+            UserPlayedDayTurn packet = (UserPlayedDayTurn) o;
+
+            if(game.gameState.id == packet.game_id){
+                int vote = game.gameState.votes.get(packet.voted);
+                vote++;
+                game.gameState.votes.put(packet.voted, vote);
+            }
+
+            System.out.println("User played day turn.");
+        }
+
+        if(o instanceof UserTurnEnded){
+            UserTurnEnded packet = (UserTurnEnded) o;
+
+            if(game.gameState.id == packet.game_id){
+                for(int i=0; i<game.gameState.players.size(); i++){
+                    if(game.gameState.players.get(i).equals(packet.killed)){
+                        game.gameState.players.remove(i);
+                    }
+                }
+            }
+
+            System.out.println("A turn has ended.");
         }
 
     }
