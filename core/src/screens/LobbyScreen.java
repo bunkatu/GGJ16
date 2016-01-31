@@ -24,11 +24,15 @@ import com.mygdx.game.Lobby;
 import java.util.ArrayList;
 
 import network.lobby.CreateLobby;
+import network.lobby.JoinLobby;
+import network.lobby.LeaveLobby;
 
 
 public class LobbyScreen implements Screen {
 
-    ArrayList<String> createdGames=new ArrayList<String>();
+    ArrayList<Lobby> createdLobbies=new ArrayList<Lobby>();
+    ArrayList<TextButton> lobbyButtons=new ArrayList<TextButton>();
+
 
     GGJ16 game;
     public OrthographicCamera camera;
@@ -94,7 +98,6 @@ public class LobbyScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 CreateLobby packet=new CreateLobby();
                 game.network.client.sendTCP(packet);
-                game.setScreen(new CreateGameScreen(game));
             }
         });
         buttonQuit=new TextButton("Quit",skin);
@@ -105,8 +108,10 @@ public class LobbyScreen implements Screen {
                                        new Dialog("Some Dialog", skin, "dialog") {
                                            protected void result(Object object) {
                                                System.out.println("Chosen: " + object);
-                                               if (object.toString() == "true")
+                                               if (object.toString() == "true"){
                                                    System.exit(0);
+                                               }
+
                                            }
                                        }.text("Are you sure you want to quit?").button("Yes", true).button("No", false).key(Input.Keys.ENTER, true)
                                                .key(Input.Keys.ESCAPE, false).show(stage);
@@ -135,18 +140,28 @@ public class LobbyScreen implements Screen {
         table=new Table();
         table.align(Align.left|Align.top);
         bg = game.textures.lobbyScreenBG;
-        for(final String gamecreated:createdGames){
-            TextButton buttoni=new TextButton(gamecreated.toString(),skin);
+        for(final Lobby gamecreated:createdLobbies){
+            TextButton buttoni=new TextButton(gamecreated.name,skin);
             buttoni.getLabel().setFontScale(3.5f);
-            buttoni.addListener(new ClickListener(){
+            buttoni.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent e, float x, float y) {
-                    System.out.println("Basıldı: "+gamecreated.toString());
-                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
+                    System.out.println("Basıldı: " + gamecreated.toString());
+
+                    JoinLobby packet = new JoinLobby();
+                    packet.id = gamecreated.id;
+//                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
 
                 }
             });
-            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+
+            lobbyButtons.add(buttoni);
+//            table.add(buttoni).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
+//            table.row();
+        }
+
+        for (TextButton bt:lobbyButtons){
+            table.add(bt).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 10);
             table.row();
         }
 
@@ -167,24 +182,68 @@ public class LobbyScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        table.clear();
 
-        for(Lobby lobby:game.lobbies){
 
-            String info=lobby.id+"      "+lobby.name+"      "+lobby.players.size()+"/"+lobby.size;
-            createdGames.add(info);
-            TextButton buttoni=new TextButton(info,skin);
-            buttoni.getLabel().setFontScale(3f);
-            buttoni.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent e, float x, float y) {
-                    game.setScreen(new JoinGameScreen(game));
+
+        if(!createdLobbies.equals(game.lobbies)){
+            for (int i=0;i<createdLobbies.size();i++){
+                if (!game.lobbies.contains(createdLobbies.get(i))){
+                    createdLobbies.remove(i);
+                    table.removeActor(lobbyButtons.get(i));
+                    lobbyButtons.remove(i);
                 }
-            });
-            table.add(buttoni).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
-            table.row();
+            }
+            for (int i=0;i<game.lobbies.size();i++){
+                if (!createdLobbies.contains(game.lobbies.get(i))){
+                    final Lobby lobby=game.lobbies.get(i);
+                    createdLobbies.add(lobby);
+                    TextButton buttoni=new TextButton(lobby.name,skin);
+                    buttoni.getLabel().setFontScale(3.5f);
+                    buttoni.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent e, float x, float y) {
+                            System.out.println("Basıldı: " + lobby.name);
+                            JoinLobby packet = new JoinLobby();
+                            packet.id = lobby.id;
+//                    game.setScreen(new JoinGameScreen(game)); //TODO gameismini arguman olarak yolla
+
+                        }
+                    });
+                    lobbyButtons.add(buttoni);
+                    table.add(buttoni).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
+                    table.row();
+
+                }
+            }
         }
+        for(Lobby lobby :game.lobbies){
+            if (lobby.players.get(0).equals(game.player.username)){
+                game.setScreen(new CreateGameScreen(game));
+            }
+            else if(lobby.players.contains(game.player.username)){
+                game.setScreen(new JoinGameScreen(game));
+            }
+        }
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        table.clear();
+        System.out.println("Lobbies size: " +game.lobbies.size());
+
+//        for(Lobby lobby:game.lobbies){
+//
+//            String info=lobby.id+"      "+lobby.name+"      "+lobby.players.size()+"/"+lobby.size;
+//            createdGames.add(new Lobby());
+//            TextButton buttoni=new TextButton(info,skin);
+//            buttoni.getLabel().setFontScale(3f);
+//            buttoni.addListener(new ClickListener() {
+//                @Override
+//                public void clicked(InputEvent e, float x, float y) {
+//                    game.setScreen(new JoinGameScreen(game));
+//                }
+//            });
+//            table.add(buttoni).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);
+//            table.row();
+//        }
 
         camera.update();
         batch.begin();

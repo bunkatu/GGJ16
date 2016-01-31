@@ -19,10 +19,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GGJ16;
+import com.mygdx.game.Lobby;
 
 import java.util.ArrayList;
 
 import network.game.CreateGame;
+import network.lobby.DeleteLobby;
+import network.lobby.LeaveLobby;
 
 
 public class CreateGameScreen implements Screen {
@@ -35,6 +38,7 @@ public class CreateGameScreen implements Screen {
     private Texture bg;
     private Skin skin;
     private ScrollPane scrollPane;
+    private boolean isLobby=false;
 
     public CreateGameScreen(GGJ16 game){
 
@@ -54,8 +58,7 @@ public class CreateGameScreen implements Screen {
     @Override
     public void show() {
 
-        CreateGame packet = new CreateGame();
-        game.network.client.sendTCP(packet);
+
 
         tableBottom = new Table();
         batch = new SpriteBatch();
@@ -70,7 +73,8 @@ public class CreateGameScreen implements Screen {
         {
             public void clicked(InputEvent e, float x, float y)
             {
-                game.setScreen(new GameScreen(game));;
+                CreateGame packet = new CreateGame();
+                game.network.client.sendTCP(packet);
             }
         });
         buttonQuit=new TextButton("Quit",skin);
@@ -81,8 +85,10 @@ public class CreateGameScreen implements Screen {
                            new Dialog("Some Dialog", skin, "dialog") {
                                 protected void result (Object object) {
                                      System.out.println("Chosen: " + object);
-                                          if(object.toString() == "true")
-                                               game.setScreen(new LobbyScreen(game));
+                                          if(object.toString() == "true"){
+                                              DeleteLobby packet=new DeleteLobby();
+                                              game.network.client.sendTCP(packet);
+                                          }
                                            }
                       }.text("Are you sure you want to quit?").button("Yes", true).button("No",false).key(Input.Keys.ENTER,true)
                           .key(Input.Keys.ESCAPE,false).show(stage);
@@ -127,6 +133,21 @@ public class CreateGameScreen implements Screen {
     public void render(float delta) {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(game.gameState.active){
+            game.setScreen(new GameScreen(game));
+        }
+
+        for (Lobby l:game.lobbies){
+            if (l.players.contains(game.player.username)){
+                isLobby=true;
+            }
+
+        }
+        if(!isLobby&&!game.gameState.active){
+            game.setScreen(new LobbyScreen(game));
+        }
+        isLobby=false;
 
         camera.update();
         batch.begin();
