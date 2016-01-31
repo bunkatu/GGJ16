@@ -62,7 +62,9 @@ public class GameScreen implements Screen {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
+        batch.begin();
+        batch.draw(bg, 0, 0);
+        System.out.println(game.gameState.playerTypes.size());
         for(int i=0;i<game.gameState.playerTypes.size();i++){
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
@@ -75,14 +77,13 @@ public class GameScreen implements Screen {
                 batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),150*i,150*i);
                 batch.draw(game.textures.kiz_saclar.get(player.hair),150*i,150*i);
             }
-            
+
 
         }
 
         camera.update();
 
-        batch.begin();
-        batch.draw(bg,0,0);
+
         batch.end();
 
     }
