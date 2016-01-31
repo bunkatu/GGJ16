@@ -135,6 +135,7 @@ public class CreateGameScreen implements Screen {
         finalContainer.add(scrollPane).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
         finalContainer.add(rightContainer).size(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
         stage.addActor(finalContainer);
+        bg=game.textures.createGameScreenBG;
         Gdx.input.setInputProcessor(stage);
 
     }

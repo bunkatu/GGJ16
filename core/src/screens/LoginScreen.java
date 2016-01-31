@@ -28,6 +28,7 @@ public class LoginScreen implements Screen {
     private TextField textPassword;
     private TextField textEmail;
     private TextButton buttonLogin;
+    private TextButton buttonRegister;
     private Skin skin;
     private Stage stage;
     private Table table;
@@ -52,6 +53,7 @@ public class LoginScreen implements Screen {
                 buttonClicked = true;
             }
         });
+
         textEmail=new TextField("",skin);
         textEmail.setMessageText("E-mail Address:");
 //        textEmail.setPosition(camera.position.x - 150, camera.position.y + 130);
@@ -72,14 +74,23 @@ public class LoginScreen implements Screen {
     public void show() {
         batch=new SpriteBatch();
 
+        buttonRegister=new TextButton("Don't have an Account ?",skin);
+        buttonRegister.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new RegisterScreen(game));
+            }
+        });
         table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, (Gdx.graphics.getHeight() / 2) + 60);
-        table.add(textEmail).size(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/12);
+        table.align(Align.left | Align.top);
+        table.setPosition(150, (Gdx.graphics.getHeight() / 2) + 60);
+        table.add(textEmail).size(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 12);
         table.row();
-        table.add(textPassword).size(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/12);
+        table.add(textPassword).size(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 12);
         table.row();
-        table.add(buttonLogin).size(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/12);
+        table.add(buttonLogin).size(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 12);
+        table.row();
+        table.add(buttonRegister).size(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/12);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);

@@ -138,6 +138,7 @@ public class JoinGameScreen implements Screen {
         finalContainer.add(scrollPane).size(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
         finalContainer.add(rightContainer).size(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
         stage.addActor(finalContainer);
+        bg=game.textures.joinGameScreenBG;
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -153,6 +154,10 @@ public class JoinGameScreen implements Screen {
 
         if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(game.player.username)){
             game.setScreen(new LobbyScreen(game));
+        }
+
+        if(game.gameState.active){
+            game.setScreen(new GameScreen(game));
         }
 
         try {

@@ -32,7 +32,7 @@ public class LoadingScreen implements Screen {
             }
 
             if (everythingLoaded) {
-                game.setScreen(new RegisterScreen(game));
+                game.setScreen(new LoginScreen(game));
             }
         }
 
