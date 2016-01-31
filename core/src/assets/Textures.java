@@ -21,6 +21,7 @@ public class Textures {
     public ArrayList<Texture> kiz_gozler;
     public ArrayList<Texture> kiz_kaslar;
     public ArrayList<Texture> kiz_saclar;
+    public ArrayList<Texture> kiz_burunlar;
 
     public Texture kiz_dudak1;
     public Texture kiz_dudak2;
@@ -59,6 +60,9 @@ public class Textures {
     public ArrayList<Texture> erkek_gozler;
     public ArrayList<Texture> erkek_kaslar;
     public ArrayList<Texture> erkek_saclar;
+    public ArrayList<Texture> erkek_ayakkabilar;
+    public ArrayList<Texture> erkek_gomlekler;
+    public ArrayList<Texture> erkek_burunlar;
 
     public Texture erkek_dudak1;
     public Texture erkek_dudak2;
@@ -96,6 +100,10 @@ public class Textures {
     public ArrayList<Texture> amca_gozler;
     public ArrayList<Texture> amca_kaslar;
     public ArrayList<Texture> amca_dudaklar;
+    public ArrayList<Texture> amca_saclar;
+    public ArrayList<Texture> amca_burunlar;
+    public ArrayList<Texture> amca_ayakkabilar;
+    public ArrayList<Texture> amca_gozlukler;
 
     public Texture amca_burun;
     public Texture amca_ayakkabi;
@@ -115,6 +123,12 @@ public class Textures {
     public ArrayList<Texture> teyze_kolyeler;
     public ArrayList<Texture> teyze_saclar;
     public ArrayList<Texture> teyze_dudaklar;
+    public ArrayList<Texture> teyze_kaslar;
+    public ArrayList<Texture> teyze_gozler;
+    public ArrayList<Texture> teyze_ayakkabilar;
+    public ArrayList<Texture> teyze_gozlukler;
+    public ArrayList<Texture> teyze_etekler;
+    public ArrayList<Texture> teyze_burunlar;
 
     public Texture teyze_ayakkabi;
     public Texture teyze_burun;
@@ -137,6 +151,7 @@ public class Textures {
         kiz_kaslar=new ArrayList<Texture>();
         kiz_saclar=new ArrayList<Texture>();
         kiz_tenler=new ArrayList<Texture>();
+        kiz_burunlar=new ArrayList<Texture>();
 
         /*-----------------------------------------------------------*/
         kiz_dudak1=new Texture(Gdx.files.internal("kiz/kiz_dudak1.png"));
@@ -166,6 +181,8 @@ public class Textures {
         kiz_ten4=new Texture(Gdx.files.internal("kiz/kiz_ten4.png"));
 
         kiz_burun = new Texture(Gdx.files.internal("kiz/kiz_burun.png"));
+
+        kiz_burunlar.add(kiz_burun);
 
         kiz_dudaklar.add(kiz_dudak1);
         kiz_dudaklar.add(kiz_dudak2);
@@ -200,6 +217,12 @@ public class Textures {
         erkek_gozler=new ArrayList<Texture>();
         erkek_kaslar=new ArrayList<Texture>();
         erkek_saclar=new ArrayList<Texture>();
+        erkek_ayakkabilar=new ArrayList<Texture>() ;
+        erkek_gomlekler=new ArrayList<Texture>() ;
+        erkek_burunlar=new ArrayList<Texture>();
+
+
+
 
         erkek_burun=new Texture(Gdx.files.internal("erkek/erkek_burun.png"));
         erkek_gomlek=new Texture(Gdx.files.internal("erkek/erkek_gomlek.png"));
@@ -229,6 +252,10 @@ public class Textures {
         erkek_kas = new Texture(Gdx.files.internal("erkek/erkek_kas.png"));
         erkek_kas1 = new Texture(Gdx.files.internal("erkek/erkek_kas1.png"));
         erkek_kas2 = new Texture(Gdx.files.internal("erkek/erkek_kas2.png"));
+
+        erkek_ayakkabilar.add(erkek_ayakkabi);
+        erkek_gomlekler.add(erkek_gomlek);
+        erkek_burunlar.add(erkek_burun);
 
         erkek_dudaklar.add(erkek_dudak1);
         erkek_dudaklar.add(erkek_dudak2);
@@ -261,6 +288,13 @@ public class Textures {
          amca_kaslar=new ArrayList<Texture>();
          amca_tisortler=new ArrayList<Texture>();
          amca_tenler=new ArrayList<Texture>();
+         amca_saclar=new ArrayList<Texture>();
+         amca_burunlar=new ArrayList<Texture>();
+         amca_ayakkabilar=new ArrayList<Texture>();
+         amca_gozlukler=new ArrayList<Texture>();
+
+
+
 
          amca_burun = new Texture(Gdx.files.internal("amca/amca_burun.png"));
          amca_ayakkabi = new Texture(Gdx.files.internal("amca/amca_ayakkabi.png"));
@@ -293,6 +327,10 @@ public class Textures {
          amca_tisort3 = new Texture(Gdx.files.internal("amca/amca_tisort3.png"));
 
 
+            amca_saclar.add(amca_sac);
+            amca_burunlar.add(amca_burun);
+            amca_ayakkabilar.add(amca_ayakkabi);
+            amca_gozlukler.add(amca_gozluk);
 
             amca_tisortler.add(amca_tisort);
             amca_tisortler.add(amca_tisort1);
@@ -323,6 +361,15 @@ public class Textures {
         teyze_kolyeler= new ArrayList<Texture>();
         teyze_saclar= new ArrayList<Texture>();
         teyze_dudaklar= new ArrayList<Texture>();
+        teyze_kaslar= new ArrayList<Texture>();
+        teyze_gozler= new ArrayList<Texture>();
+        teyze_ayakkabilar= new ArrayList<Texture>();
+        teyze_gozlukler= new ArrayList<Texture>();
+        teyze_etekler= new ArrayList<Texture>();
+        teyze_burunlar= new ArrayList<Texture>();
+
+
+
 
         teyze_kas=new Texture(Gdx.files.internal("teyze/teyze_kas1.png"));
 
@@ -356,6 +403,13 @@ public class Textures {
           teyze_tisort1 = new Texture(Gdx.files.internal("teyze/teyze_yelek.png"));
           teyze_tisort2 = new Texture(Gdx.files.internal("teyze/teyze_yelek1.png"));
           teyze_tisort3 = new Texture(Gdx.files.internal("teyze/teyze_yelek2.png"));
+
+        teyze_kaslar.add(teyze_kas);
+        teyze_gozler.add(teyze_goz);
+        teyze_ayakkabilar.add(teyze_ayakkabi);
+        teyze_gozlukler.add(teyze_gozluk);
+        teyze_etekler.add(teyze_etek);
+        teyze_burunlar.add(teyze_burun);
 
         teyze_tisortler.add(teyze_tisort1);
         teyze_tisortler.add(teyze_tisort2);
