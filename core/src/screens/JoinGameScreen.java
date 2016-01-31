@@ -155,9 +155,12 @@ public class JoinGameScreen implements Screen {
         if(game.gameState.active){
             game.setScreen(new GameScreen(game));
         }
-        
+        try{
         if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(game.player.username)){
             game.setScreen(new LobbyScreen(game));
+        }}catch (Exception e)
+        {
+            System.out.print(e);
         }
 
 
