@@ -55,6 +55,8 @@ public class Network extends Listener  {
         client.getKryo().register(ArrayList.class);
         client.getKryo().register(Queue.class);
         client.getKryo().register(LinkedList.class);
+        client.getKryo().register(HashMap.class);
+        client.getKryo().register(Map.class);
 
         client.getKryo().register(Register.class);
         client.getKryo().register(RegisterSuccess.class);
