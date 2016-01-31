@@ -21,6 +21,7 @@ import network.lobby.CreateLobby;
 import network.lobby.DeleteLobby;
 import network.lobby.JoinLobby;
 import network.lobby.LeaveLobby;
+import network.lobby.LobbyReady;
 import network.lobby.UserCreatedLobby;
 import network.lobby.UserDeletedLobby;
 import network.lobby.UserJoinedLobby;
@@ -35,7 +36,7 @@ import network.register.Register;
 import network.register.RegisterFailure;
 import network.register.RegisterSuccess;
 
-public class Network extends Listener {
+public class Network extends Listener  {
 
     public Client client;
     public GGJ16 game;
@@ -67,6 +68,8 @@ public class Network extends Listener {
         client.getKryo().register(UserLeftLobby.class);
         client.getKryo().register(DeleteLobby.class);
         client.getKryo().register(UserDeletedLobby.class);
+        client.getKryo().register(LobbyReady.class);
+        client.getKryo().register(UserReadyLobby.class);
 
         client.getKryo().register(CreateGame.class);
         client.getKryo().register(UserCreatedGame.class);
