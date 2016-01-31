@@ -85,20 +85,20 @@ public class JoinGameScreen implements Screen {
             }
         });
         buttonQuit=new TextButton("Leave Lobby",skin);
-        buttonQuit.addListener(new ClickListener(){
+        buttonQuit.addListener(new ClickListener() {
                                    @Override
-                                   public void clicked(InputEvent e, float x, float y)
-                                   {boolean as=false;
+                                   public void clicked(InputEvent e, float x, float y) {
+                                       boolean as = false;
                                        new Dialog("Some Dialog", skin, "dialog") {
-                                           protected void result (Object object) {
+                                           protected void result(Object object) {
                                                System.out.println("Chosen: " + object);
-                                               if(object.toString() == "true"){
+                                               if (object.toString() == "true") {
                                                    LeaveLobby packet = new LeaveLobby();
                                                    game.network.client.sendTCP(packet);
                                                }
                                            }
-                                       }.text("Are you sure you want to quit?").button("Yes", true).button("No",false).key(Input.Keys.ENTER,true)
-                                               .key(Input.Keys.ESCAPE,false).show(stage);
+                                       }.text("Are you sure you want to quit?").button("Yes", true).button("No", false).key(Input.Keys.ENTER, true)
+                                               .key(Input.Keys.ESCAPE, false).show(stage);
 
                                    }
                                }
@@ -152,13 +152,15 @@ public class JoinGameScreen implements Screen {
             System.out.println("SICTIK ");
         }
 
+        if(game.gameState.active){
+            game.setScreen(new GameScreen(game));
+        }
+        
         if(!game.lobbies.get(game.lobbies.indexOf(thisLobby)).players.contains(game.player.username)){
             game.setScreen(new LobbyScreen(game));
         }
 
-        if(game.gameState.active){
-            game.setScreen(new GameScreen(game));
-        }
+
 
         try {
             if(!lobbyPlayers.equals(game.lobbies.get(game.lobbies.indexOf(thisLobby)).players)){
