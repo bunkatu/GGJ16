@@ -51,18 +51,18 @@ public class GameScreen implements Screen {
         skin =new Skin(Gdx.files.internal("uiskin.json"));
         font=new BitmapFont();
         font.setColor(0,0,0,1);
-        POS1X=(Gdx.graphics.getWidth()*2/6);
-        POS1Y=0;
-        POS2X=(Gdx.graphics.getWidth()*2/8);
+        POS1X=(Gdx.graphics.getWidth()*0.17f);
+        POS1Y=20;
+        POS2X=(Gdx.graphics.getWidth()*0.04f);
         POS2Y=(Gdx.graphics.getHeight()*0.4f);
-        POS3X=(Gdx.graphics.getWidth()*3/10);
-        POS3Y=(Gdx.graphics.getHeight()*0.5f);
-        POS4X=(Gdx.graphics.getWidth()*6/10);
+        POS3X=(Gdx.graphics.getWidth()*0.2f);
+        POS3Y=(Gdx.graphics.getHeight()*0.6f);
+        POS4X=(Gdx.graphics.getWidth()*0.6f);
         POS4Y=(Gdx.graphics.getHeight()*0.5f);
-        POS5X=(Gdx.graphics.getWidth()*5/8);
+        POS5X=(Gdx.graphics.getWidth()*0.8f);
         POS5Y=(Gdx.graphics.getHeight()*0.4f);
-        POS6X=(Gdx.graphics.getWidth()*3/6);
-        POS6Y=0;
+        POS6X=(Gdx.graphics.getWidth()*0.5f);
+        POS6Y=20;
         posx=new ArrayList<Float>();
         posx.add(POS1X);
         posx.add(POS2X);
@@ -112,20 +112,21 @@ public class GameScreen implements Screen {
         batch.draw(bg, 0, 0);
         System.out.println(game.gameState.playerTypes.size());
         for(int i=0;i<game.gameState.playerTypes.size();i++){
-            if (i==1||i==6){
-                scale=(Gdx.graphics.getWidth()*0.6f);
+            if (i==0||i==5){
+                scale=(Gdx.graphics.getHeight()*0.5f);
             }
-            else if (i==2||i==5){
-                scale=(Gdx.graphics.getWidth()*0.5f);
+            else if (i==1||i==4){
+                scale=(Gdx.graphics.getHeight()*0.4f);
             }
-            else if (i==3||i==4){
-                scale=(Gdx.graphics.getWidth()*0.4f);
+            else if (i==2||i==3){
+                scale=(Gdx.graphics.getHeight()*0.3f);
             }
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
             if(type==0){
 //                System.out.println(game.gameState.players.size()+"xsize"+posx.size()+"ysize"+posy.size());
-                font.draw(batch,game.gameState.players.get(i),posx.get(i),posy.get(i));
+                font.draw(batch,game.gameState.players.get(i),posx.get(i)+scale/2-font.getSpaceWidth(),posy.get(i)+scale);
+
                 System.out.println("Eleman : " + game.gameState.players.get(i));
 
                 batch.draw(game.textures.kiz_tenler.get(player.skin),posx.get(i),posy.get(i),scale,scale);

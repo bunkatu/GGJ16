@@ -14,6 +14,7 @@ public class Textures {
     public Texture lobbyScreenBG;
     public Texture loginScreenBG;
     public Texture registerScreenBG;
+    public Texture customScreenBG;
     /*------------------kiz---------------*/
     public ArrayList<Texture> kiz_dudaklar;
     public ArrayList<Texture> kiz_tenler;
@@ -435,12 +436,14 @@ public class Textures {
     }
 
     public void loadBG(){
+
         gameScreenBG = new Texture(Gdx.files.internal("screens/gameScreenBG.jpg"));
         createGameScreenBG = new Texture(Gdx.files.internal("screens/createGameScreenBG.jpg"));
         joinGameScreenBG = new Texture(Gdx.files.internal("screens/joinGameScreenBG.jpg"));
         lobbyScreenBG = new Texture(Gdx.files.internal("screens/lobbyScreenBG.jpg"));
         loginScreenBG = new Texture(Gdx.files.internal("screens/loginScreenBG.jpg"));
         registerScreenBG = new Texture(Gdx.files.internal("screens/registerScreenBG.jpg"));
+        customScreenBG=new Texture(Gdx.files.internal("screens/customScreenBG.png"));
 
 
 

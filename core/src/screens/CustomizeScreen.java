@@ -62,7 +62,7 @@ public class CustomizeScreen implements Screen {
         camera=new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         stage=new Stage(new ScreenViewport());
-        bg = game.textures.lobbyScreenBG;
+        bg = game.textures.customScreenBG;
         tableCategories=new Table();
         tableCategories.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         tableCategories.align(Align.left);
