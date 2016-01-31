@@ -71,12 +71,12 @@ public class GameScreen implements Screen {
         posx.add(POS5X);
         posx.add(POS6X);
         posy=new ArrayList<Float>();
-        posx.add(POS1Y);
-        posx.add(POS2Y);
-        posx.add(POS3Y);
-        posx.add(POS4Y);
-        posx.add(POS5Y);
-        posx.add(POS6Y);
+        posy.add(POS1Y);
+        posy.add(POS2Y);
+        posy.add(POS3Y);
+        posy.add(POS4Y);
+        posy.add(POS5Y);
+        posy.add(POS6Y);
 
         System.out.println(game.gameState.id);
         for (String name:game.gameState.players){
@@ -124,6 +124,7 @@ public class GameScreen implements Screen {
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
             if(type==0){
+//                System.out.println(game.gameState.players.size()+"xsize"+posx.size()+"ysize"+posy.size());
                 font.draw(batch,game.gameState.players.get(i),posx.get(i),posy.get(i));
                 System.out.println("Eleman : " + game.gameState.players.get(i));
 
