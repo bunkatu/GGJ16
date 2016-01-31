@@ -143,7 +143,7 @@ public class CreateGameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        System.out.println(game.lobbies.size());
+//        System.out.println(game.lobbies.size());
 //        System.out.print(game.lobbies.get(0).name);
 //        System.out.print(thisLobby.name);
 

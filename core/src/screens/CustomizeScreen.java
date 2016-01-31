@@ -397,8 +397,8 @@ public class CustomizeScreen implements Screen {
             int index = game.textures.teyze_tisortler.indexOf(elbise);
             elbise=game.textures.teyze_tisortler.get((index+1)%game.textures.teyze_tisortler.size());
         }else if (selection == 5) {
-            int index = game.textures.teyze_kolyeler.indexOf(kas);
-            kas=game.textures.teyze_kolyeler.get((index+1)%game.textures.teyze_kolyeler.size());
+            int index = game.textures.teyze_kolyeler.indexOf(kolye);
+            kolye=game.textures.teyze_kolyeler.get((index+1)%game.textures.teyze_kolyeler.size());
         }
     }
     public void teyzeInitial(){
@@ -412,6 +412,7 @@ public class CustomizeScreen implements Screen {
         gomlek=game.textures.teyze_etek;
         gozluk=game.textures.teyze_gozluk;
         kolye=game.textures.teyze_kolyeler.get(0);
+        kas=game.textures.teyze_kas;
     }
 
 }

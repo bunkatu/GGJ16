@@ -126,6 +126,7 @@ public class Textures {
     public Texture teyze_sac,teyze_sac1,teyze_sac2;
     public Texture teyze_ten,teyze_ten1,teyze_ten2;
     public Texture teyze_tisort,teyze_tisort1,teyze_tisort2,teyze_tisort3;
+    public Texture teyze_kas;
 
     /*---------------Teyze------------*/
 
@@ -322,6 +323,8 @@ public class Textures {
         teyze_kolyeler= new ArrayList<Texture>();
         teyze_saclar= new ArrayList<Texture>();
         teyze_dudaklar= new ArrayList<Texture>();
+
+        teyze_kas=new Texture(Gdx.files.internal("teyze/teyze_kas1.png"));
 
           teyze_ayakkabi = new Texture(Gdx.files.internal("teyze/teyze_ayakkabi.png"));
 
