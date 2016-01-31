@@ -106,24 +106,34 @@ public class GameScreen implements Screen {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        float scale=200;
 
         batch.begin();
         batch.draw(bg, 0, 0);
         System.out.println(game.gameState.playerTypes.size());
         for(int i=0;i<game.gameState.playerTypes.size();i++){
+            if (i==1||i==6){
+                scale=(Gdx.graphics.getWidth()*0.6f);
+            }
+            else if (i==2||i==5){
+                scale=(Gdx.graphics.getWidth()*0.5f);
+            }
+            else if (i==3||i==4){
+                scale=(Gdx.graphics.getWidth()*0.4f);
+            }
             Player player=game.gameState.playerTypes.get(i);
             int type=player.type;
             if(type==0){
                 font.draw(batch,game.gameState.players.get(i),posx.get(i),posy.get(i));
                 System.out.println("Eleman : " + game.gameState.players.get(i));
 
-                batch.draw(game.textures.kiz_tenler.get(player.skin),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_burunlar.get(0),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_dudaklar.get(player.lips),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_elbiseler.get(player.dress),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_gozler.get(player.eyes),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),posx.get(i),posy.get(i));
-                batch.draw(game.textures.kiz_saclar.get(player.hair),posx.get(i),posy.get(i));
+                batch.draw(game.textures.kiz_tenler.get(player.skin),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_burunlar.get(0),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_dudaklar.get(player.lips),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_elbiseler.get(player.dress),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_gozler.get(player.eyes),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_kaslar.get(player.eyebrows),posx.get(i),posy.get(i),scale,scale);
+                batch.draw(game.textures.kiz_saclar.get(player.hair),posx.get(i),posy.get(i),scale,scale);
 
             }
 
